@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Домашнє завдання — Відсотки</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 50%, #fce4ec 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+    color: #2d3748;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .subject-badge {
+    display: inline-block;
+    background: #1565c0;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 1.1rem;
+    border-radius: 50px;
+    margin-bottom: 0.9rem;
+  }
+
+  h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1a237e;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: #546e7a;
+    font-weight: 600;
+  }
+
+  .stars {
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
+    letter-spacing: 4px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    border-radius: 20px 20px 0 0;
+  }
+  .card:nth-child(1)::before { background: linear-gradient(90deg, #42a5f5, #1565c0); }
+  .card:nth-child(2)::before { background: linear-gradient(90deg, #66bb6a, #2e7d32); }
+  .card:nth-child(3)::before { background: linear-gradient(90deg, #ffa726, #e65100); }
+  .card:nth-child(4)::before { background: linear-gradient(90deg, #ab47bc, #6a1b9a); }
+  .card:nth-child(5)::before { background: linear-gradient(90deg, #ef5350, #b71c1c); }
+
+  .task-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-right: 0.7rem;
+    flex-shrink: 0;
+  }
+  .card:nth-child(1) .task-number { background: #1565c0; }
+  .card:nth-child(2) .task-number { background: #2e7d32; }
+  .card:nth-child(3) .task-number { background: #e65100; }
+  .card:nth-child(4) .task-number { background: #6a1b9a; }
+  .card:nth-child(5) .task-number { background: #b71c1c; }
+
+  .task-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .task-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #546e7a;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding-top: 7px;
+  }
+
+  .task-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #37474f;
+    background: #f5f9ff;
+    border-left: 4px solid #90caf9;
+    border-radius: 0 10px 10px 0;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.1rem;
+  }
+  .card:nth-child(2) .task-text { background: #f1f8e9; border-color: #a5d6a7; }
+  .card:nth-child(3) .task-text { background: #fff3e0; border-color: #ffcc80; }
+  .card:nth-child(4) .task-text { background: #f3e5f5; border-color: #ce93d8; }
+  .card:nth-child(5) .task-text { background: #ffebee; border-color: #ef9a9a; }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .answer-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #546e7a;
+    white-space: nowrap;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    min-width: 140px;
+    max-width: 260px;
+    padding: 0.55rem 1rem;
+    border: 2px solid #cfd8dc;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  input[type="text"]:focus {
+    border-color: #1565c0;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(21,101,192,0.12);
+  }
+  input.correct {
+    border-color: #43a047 !important;
+    background: #e8f5e9 !important;
+    color: #1b5e20 !important;
+    box-shadow: 0 0 0 3px rgba(67,160,71,0.15) !important;
+  }
+  input.wrong {
+    border-color: #e53935 !important;
+    background: #ffebee !important;
+    color: #b71c1c !important;
+    box-shadow: 0 0 0 3px rgba(229,57,53,0.15) !important;
+  }
+
+  .check-btn {
+    padding: 0.55rem 1.3rem;
+    background: #1565c0;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .check-btn:hover { background: #0d47a1; }
+  .check-btn:active { transform: scale(0.97); }
+  .card:nth-child(2) .check-btn { background: #2e7d32; }
+  .card:nth-child(2) .check-btn:hover { background: #1b5e20; }
+  .card:nth-child(3) .check-btn { background: #e65100; }
+  .card:nth-child(3) .check-btn:hover { background: #bf360c; }
+  .card:nth-child(4) .check-btn { background: #6a1b9a; }
+  .card:nth-child(4) .check-btn:hover { background: #4a148c; }
+  .card:nth-child(5) .check-btn { background: #c62828; }
+  .card:nth-child(5) .check-btn:hover { background: #b71c1c; }
+
+  .feedback {
+    margin-top: 0.75rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    min-height: 1.4rem;
+    transition: all 0.2s;
+  }
+  .feedback.correct { color: #2e7d32; }
+  .feedback.wrong { color: #c62828; }
+
+  .hint-toggle {
+    background: none;
+    border: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.88rem;
+    color: #90a4ae;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin-top: 0.6rem;
+    display: block;
+    transition: color 0.2s;
+  }
+  .hint-toggle:hover { color: #546e7a; }
+
+  .hint-box {
+    display: none;
+    margin-top: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: #fff9c4;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    color: #f57f17;
+    font-weight: 600;
+    border-left: 3px solid #f9a825;
+  }
+  .hint-box.show { display: block; }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.88rem;
+    color: #90a4ae;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="subject-badge">Математика · 5–6 клас</div>
+  <h1>Відсотки</h1>
+  <p class="subtitle">Домашнє завдання — виконай усі задачі та перевір себе!</p>
+  <div class="stars">⭐⭐⭐</div>
+</header>
+
+<div class="container">
+
+  <!-- Задача 1 -->
+  <div class="card">
+    <div class="task-header">
+      <span class="task-number">1</span>
+      <span class="task-title">Задача</span>
+    </div>
+    <div class="task-text">
+      У класі <strong>30 учнів</strong>. На урок прийшло <strong>90%</strong> від загальної кількості.<br>
+      Скільки учнів прийшло на урок?
+    </div>
+    <div class="input-row">
+      <span class="answer-label">Відповідь:</span>
+      <input type="text" id="ans1" placeholder="Введи число…">
+      <span style="font-size:1rem; color:#546e7a; font-weight:600;">учнів</span>
+      <button class="check-btn" onclick="check(1, 27)">Перевірити</button>
+    </div>
+    <div class="feedback" id="fb1"></div>
+    <button class="hint-toggle" onclick="toggleHint('hint1', this)">Показати підказку</button>
+    <div class="hint-box" id="hint1">90% від 30 = 30 × 90 ÷ 100</div>
+  </div>
+
+  <!-- Задача 2 -->
+  <div class="card">
+    <div class="task-header">
+      <span class="task-number">2</span>
+      <span class="task-title">Задача</span>
+    </div>
+    <div class="task-text">
+      Кошик яблук важить <strong>50 кг</strong>. З кошика взяли <strong>20%</strong> яблук.<br>
+      Скільки кілограмів яблук залишилось у кошику?
+    </div>
+    <div class="input-row">
+      <span class="answer-label">Відповідь:</span>
+      <input type="text" id="ans2" placeholder="Введи число…">
+      <span style="font-size:1rem; color:#546e7a; font-weight:600;">кг</span>
+      <button class="check-btn" onclick="check(2, 40)">Перевірити</button>
+    </div>
+    <div class="feedback" id="fb2"></div>
+    <button class="hint-toggle" onclick="toggleHint('hint2', this)">Показати підказку</button>
+    <div class="hint-box" id="hint2">Спочатку знайди 20% від 50, потім відніми від 50.</div>
+  </div>
+
+  <!-- Задача 3 -->
+  <div class="card">
+    <div class="task-header">
+      <span class="task-number">3</span>
+      <span class="task-title">Задача</span>
+    </div>
+    <div class="task-text">
+      Куртка коштує <strong>800 грн</strong>. У магазині оголосили знижку <strong>15%</strong>.<br>
+      Яка нова ціна куртки після знижки?
+    </div>
+    <div class="input-row">
+      <span class="answer-label">Відповідь:</span>
+      <input type="text" id="ans3" placeholder="Введи число…">
+      <span style="font-size:1rem; color:#546e7a; font-weight:600;">грн</span>
+      <button class="check-btn" onclick="check(3, 680)">Перевірити</button>
+    </div>
+    <div class="feedback" id="fb3"></div>
+    <button class="hint-toggle" onclick="toggleHint('hint3', this)">Показати підказку</button>
+    <div class="hint-box" id="hint3">15% від 800 = 120 грн. Нова ціна = 800 − 120.</div>
+  </div>
+
+  <!-- Задача 4 -->
+  <div class="card">
+    <div class="task-header">
+      <span class="task-number">4</span>
+      <span class="task-title">Задача</span>
+    </div>
+    <div class="task-text">
+      Оля правильно виконала <strong>18 прикладів</strong> із <strong>24</strong>.<br>
+      Який відсоток прикладів вона виконала правильно?
+    </div>
+    <div class="input-row">
+      <span class="answer-label">Відповідь:</span>
+      <input type="text" id="ans4" placeholder="Введи число…">
+      <span style="font-size:1rem; color:#546e7a; font-weight:600;">%</span>
+      <button class="check-btn" onclick="check(4, 75)">Перевірити</button>
+    </div>
+    <div class="feedback" id="fb4"></div>
+    <button class="hint-toggle" onclick="toggleHint('hint4', this)">Показати підказку</button>
+    <div class="hint-box" id="hint4">% = (18 ÷ 24) × 100</div>
+  </div>
+
+  <!-- Задача 5 -->
+  <div class="card">
+    <div class="task-header">
+      <span class="task-number">5</span>
+      <span class="task-title">Задача</span>
+    </div>
+    <div class="task-text">
+      У бібліотеці <strong>200 книг</strong>. З них <strong>35%</strong> — казки, а <strong>25%</strong> — книги про природу.<br>
+      Скільки книг у бібліотеці <em>не є</em> ні казками, ні книгами про природу?
+    </div>
+    <div class="input-row">
+      <span class="answer-label">Відповідь:</span>
+      <input type="text" id="ans5" placeholder="Введи число…">
+      <span style="font-size:1rem; color:#546e7a; font-weight:600;">книг</span>
+      <button class="check-btn" onclick="check(5, 80)">Перевірити</button>
+    </div>
+    <div class="feedback" id="fb5"></div>
+    <button class="hint-toggle" onclick="toggleHint('hint5', this)">Показати підказку</button>
+    <div class="hint-box" id="hint5">35% + 25% = 60%. Решта = 100% − 60% = 40% від 200.</div>
+  </div>
+
+</div>
+
+<footer>Молодець, що виконуєш домашнє завдання! 🌟</footer>
+
+<script>
+function check(taskNum, correct) {
+  const input = document.getElementById('ans' + taskNum);
+  const fb = document.getElementById('fb' + taskNum);
+  const raw = input.value.trim().replace(',', '.');
+  const val = parseFloat(raw);
+
+  input.classList.remove('correct', 'wrong');
+  fb.classList.remove('correct', 'wrong');
+
+  if (raw === '') {
+    fb.textContent = 'Будь ласка, введи відповідь.';
+    fb.className = 'feedback wrong';
+    return;
+  }
+
+  if (isNaN(val)) {
+    fb.textContent = 'Введи числове значення.';
+    fb.className = 'feedback wrong';
+    input.classList.add('wrong');
+    return;
+  }
+
+  if (Math.abs(val - correct) < 0.01) {
+    input.classList.add('correct');
+    fb.textContent = '✓ Правильно! Чудова робота!';
+    fb.className = 'feedback correct';
+  } else {
+    input.classList.add('wrong');
+    fb.textContent = `✗ Не вірно. Правильна відповідь: ${correct}`;
+    fb.className = 'feedback wrong';
+  }
+}
+
+function toggleHint(id, btn) {
+  const box = document.getElementById(id);
+  const showing = box.classList.toggle('show');
+  btn.textContent = showing ? 'Сховати підказку' : 'Показати підказку';
+}
+</script>
+</body>
+</html>
